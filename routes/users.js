@@ -1,6 +1,6 @@
 var express = require('express');
 const bodyParser = require('body-parser');
-var User = require('./models/user');
+var User = require('../models/user');
 
 var router = express.Router();
 router.use(bodyParser.json());
@@ -74,5 +74,18 @@ router.post('/login', (req, res, next) => {
       res.end('You are already authenticated!');
     }
 });
+
+router.get('/logout', (req, res, next) =>{
+  if(req.session){
+    req.session.destroy();
+    res.clearCookie('session-id');
+    res.redirect('/');
+  }
+  else{
+    var err = new Error('You are not logged In!');
+    err.statusCode= 403;
+    next(err);
+  }
+})
 
 module.exports = router;
