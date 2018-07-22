@@ -48,7 +48,12 @@ router.post('/login', (req, res, next) => {
       var password = auth[1];
       User.findOne({username: username})
       .then((user) => {
-        if (user.username == username && user.password == password) {
+         if (user === null){
+          var err = new Error('User '+ username + ' does not exist!');
+          err.status = 403;
+          next(err);
+        }
+        else if (user.username == username && user.password == password) {
           req.session.user = 'authenticated';
           res.statusCode = 200;
           res.setHeader('Content-Type', 'text/plain');
@@ -59,11 +64,7 @@ router.post('/login', (req, res, next) => {
           err.status = 401;
           next(err);
         }
-        else if (user === null){
-          var err = new Error('User '+ username + ' does not exist!');
-          err.status = 403;
-          next(err);
-        } 
+         
         
       })
       .catch((err) => next(err));   
