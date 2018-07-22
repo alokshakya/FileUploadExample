@@ -44,18 +44,35 @@ router.post('/login', (req, res, next) => {
           return;
       }
       var auth = new Buffer(authHeader.split(' ')[1], 'base64').toString().split(':');
-      var user = auth[0];
-      var pass = auth[1];
-      if (user == 'admin' && pass == 'password') {
-          req.session.user = 'admin';
-          next(); // authorized
-      } else {
-          var err = new Error('You are not authenticated!');
-          res.setHeader('WWW-Authenticate', 'Basic');
+      var username = auth[0];
+      var password = auth[1];
+      User.findOne({username: username})
+      .then((user) => {
+        if (user.username == username && user.password == password) {
+          req.session.user = 'authenticated';
+          res.statusCode = 200;
+          res.setHeader('Content-Type', 'text/plain');
+          res.end('You are authenticated!');
+        }
+        else if (user.password!== password){
+          var err = new Error('Your password is incorrect!');
           err.status = 401;
           next(err);
-      }
-  }
+        }
+        else if (user === null){
+          var err = new Error('User '+ username + ' does not exist!');
+          err.status = 403;
+          next(err);
+        } 
+        
+      })
+      .catch((err) => next(err));   
+    }
+    else{
+      res.statusCode= 200;
+      res.setHeader('Content-Type', 'text/plain');
+      res.end('You are already authenticated!');
+    }
 });
 
 module.exports = router;
