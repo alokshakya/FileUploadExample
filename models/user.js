@@ -11,4 +11,5 @@ var User = new Schema({
 
 User.plugin(passportLocalMongoose); // this will add password hash
 
+
 module.exports = mongoose.model('User', User);
