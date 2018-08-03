@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var favoriteDishSchema = new Schema({
-    dish:  {
+    _id:  {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Dishes'
+        ref: 'Dish' //Dishes can't be used as it is exported not schema
     }
 });
 var favoriteSchema = new Schema({
