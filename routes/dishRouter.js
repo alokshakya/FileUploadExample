@@ -185,7 +185,8 @@ dishRouter.route('/:dishId/comments/:commentId')
     Dishes.findById(req.params.dishId)
     .then((dish) => {
         if (dish != null && dish.comments.id(req.params.commentId) != null) {
-            if((dish.comments.id(req.params.commentId).author).equals(req.user._id)){
+            if((dish.comments.id(req.params.commentId).author).equals(req.user._id)){ 
+                //(dish.comments.id(req.params.commentId).author._id).equals(req.user._id) //also works
                 if (req.body.rating) {
                     dish.comments.id(req.params.commentId).rating = req.body.rating;
                 }
