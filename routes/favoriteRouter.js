@@ -12,10 +12,10 @@ favoriteRouter.use(bodyParser.json());
 
 favoriteRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
-.get(cors.cors, (req,res,next) => {
+.get(cors.cors, authenticate.verifyUser, (req,res,next) => {
     Favorites.find({user:req.user._id})
     .populate('user')
-    .populate('dishes.dish')
+    .populate('dishes')
     .then((favorites) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
@@ -56,12 +56,12 @@ favoriteRouter.route('/')
     }, (err) => next(err))
     .catch((err) => next(err));
 })
-.put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin,(req, res, next) => {
+.put(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /dishes');
 })
-.delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin,(req, res, next) => {
-    Favorites.remove({user: req.user._id})
+.delete(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
+    Favorites.remove({})
     .then((resp) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
@@ -72,12 +72,13 @@ favoriteRouter.route('/')
 
 favoriteRouter.route('/:dishId')
 .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
-.get(cors.cors, (req,res,next) => {
+.get(cors.cors, authenticate.verifyUser, (req,res,next) => {
     res.statusCode = 403;
     res.end('GET operation not supported on /favorites/'+req.params.dishId);
 })
-.post(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+.post(cors.corsWithOptions, authenticate.verifyUser, (req, res, next) => {
     Favorites.find({user:req.user._id})
+    //Favorites.create({user: req.user._id})
     .then((favorites) => {
         if (favorites != null) {
             favorites.dishes.push(req.params.dishId); 
@@ -103,14 +104,19 @@ favoriteRouter.route('/:dishId')
     }, (err) => next(err))
     .catch((err) => next(err));
 })
-.put(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+.put(cors.corsWithOptions, authenticate.verifyUser,  (req, res, next) => {
     res.statusCode = 403;
     res.end('PUT operation not supported on /favorites/'+req.params.dishId);
 })
-.delete(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
+.delete(cors.corsWithOptions, authenticate.verifyUser,  (req, res, next) => {
     Favorites.find({user:req.user._id})
     .then((favorites) => {
-        if (favorites != null) {
+        if(favorites==null){
+            err = new Error('You have not stored any dish as favorite dish. First Add dish to favorites.\n Then you will be able to perform this operation');
+            err.status = 404;
+            return next(err);
+        }
+        else if (favorites != null) {
             if(favorites.dishes.dish(req.params.dishId)!=null){
                 favorites.dishes.dish(req.params.dishId).remove(); 
                 favorites.save()
