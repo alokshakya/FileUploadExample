@@ -92,7 +92,7 @@ favoriteRouter.route('/:dishId')
     Favorites.findOne({user:req.user._id})
     //Favorites.create({user: req.user._id})
     .then((favorites) => {
-        console.log('favorites/dishId Post ',favorites);
+        //console.log('favorites/dishId Post ',favorites);
         if (favorites != null) {
             if(!isDishExisting(req.params.dishId, favorites.dishes)){
                 favorites.dishes.push(req.params.dishId);

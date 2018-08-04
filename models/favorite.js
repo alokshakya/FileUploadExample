@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 var favoriteSchema = new Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        unique: true
     },
     dishes:[
             {
