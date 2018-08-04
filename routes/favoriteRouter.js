@@ -9,7 +9,14 @@ const Favorites = require('../models/favorite');
 const favoriteRouter = express.Router();
 
 favoriteRouter.use(bodyParser.json());
-
+var isDishExisting = ((dishId,dishes) =>{
+    for( var i=0; i<dishes.length; i++){
+        if(dishes[i]==dishId){
+            return true;
+        }
+    }
+    return false;
+});
 favoriteRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); })
 .get(cors.cors, authenticate.verifyUser, (req,res,next) => {
@@ -149,13 +156,6 @@ favoriteRouter.route('/:dishId')
     .catch((err) => next(err));
 });
 
-isDishExisting((dishId,dishes) =>{
-    for( var i=0; i<dishes.length; i++){
-        if(dishes[i]==dishId){
-            return true;
-        }
-    }
-    return false;
-});
+
 
 module.exports = favoriteRouter;
