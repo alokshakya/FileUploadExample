@@ -92,7 +92,7 @@ favoriteRouter.route('/:dishId')
             }, (err) => next(err));
         }
         else {
-            console.log('creating new schema')
+            //console.log('creating new schema')
             Favorites.create({user: req.user._id})
             .then((favorites) => {
                 favorites.dishes.push(req.params.dishId); 
@@ -115,8 +115,8 @@ favoriteRouter.route('/:dishId')
     Favorites.findOne({user:req.user._id})
     .then((favorites) => {
         if (favorites != null) {
-            console.log('inside delete/dishId favourites!=null '+ favorites);
-            console.log('inside delete/dishId favourites!=null =>  favorites.dishes '+ favorites.dishes);
+            //console.log('inside delete/dishId favourites!=null '+ favorites);
+            //console.log('inside delete/dishId favourites!=null =>  favorites.dishes '+ favorites.dishes);
             var index=-1;
             for( var i=0; i<favorites.dishes.length; i++){
                 if(favorites.dishes[i]== req.params.dishId){
@@ -124,7 +124,7 @@ favoriteRouter.route('/:dishId')
                     i=favorites.dishes.length;
                 }
             }
-            if(index!=-1){
+            if(index !=-1){
                 favorites.dishes.remove(req.params.dishId); 
                 favorites.save()
                 .then((favorites) => {
