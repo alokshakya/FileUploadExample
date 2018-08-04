@@ -29,8 +29,10 @@ favoriteRouter.route('/')
     .then((favorites) => {
         if (favorites != null) {
             //req.body.author = req.user._id;
-            for (var i=0; i< req.body.dishes.length; i++){
-                favorites.dishes.push(req.body.dishes[i]._id); 
+            for (var i=0; i< req.body.length; i++){
+                if(!isDishExisting(req.body[i]._id, favorites.dishes)){
+                    favorites.dishes.push(req.body[i]._id);
+                }      
             }
             favorites.save()
             .then((favorites) => {
@@ -43,8 +45,10 @@ favoriteRouter.route('/')
             console.log('creating document for user not exists before ');
             Favorites.create({user: req.user._id})
             .then((favorites) => {
-                for (var i=0; i< req.body.dishes.length; i++){
-                    favorites.dishes.push(req.body.dishes[i]._id); 
+                for (var i=0; i< req.body.length; i++){
+                    if(!isDishExisting(req.body[i]._id, favorites.dishes)){
+                        favorites.dishes.push(req.body[i]._id);
+                    } 
                 }
                 favorites.save()
                 .then((favorites) => {
@@ -83,7 +87,9 @@ favoriteRouter.route('/:dishId')
     .then((favorites) => {
         console.log('favorites/dishId Post ',favorites);
         if (favorites != null) {
-            favorites.dishes.push(req.params.dishId); 
+            if(!isDishExisting(req.params.dishId, favorites.dishes)){
+                favorites.dishes.push(req.params.dishId);
+            }
             favorites.save()
             .then((favorites) => {
                 res.statusCode = 200;
@@ -95,7 +101,9 @@ favoriteRouter.route('/:dishId')
             //console.log('creating new schema')
             Favorites.create({user: req.user._id})
             .then((favorites) => {
-                favorites.dishes.push(req.params.dishId); 
+                if(!isDishExisting(req.params.dishId, favorites.dishes)){
+                    favorites.dishes.push(req.params.dishId);
+                } 
                 favorites.save()
                 .then((favorites) => {
                     res.statusCode = 200;
@@ -117,14 +125,7 @@ favoriteRouter.route('/:dishId')
         if (favorites != null) {
             //console.log('inside delete/dishId favourites!=null '+ favorites);
             //console.log('inside delete/dishId favourites!=null =>  favorites.dishes '+ favorites.dishes);
-            var index=-1;
-            for( var i=0; i<favorites.dishes.length; i++){
-                if(favorites.dishes[i]== req.params.dishId){
-                    index=i;
-                    i=favorites.dishes.length;
-                }
-            }
-            if(index !=-1){
+            if(isDishExisting(req.params.dishId, favorites.dishes)){
                 favorites.dishes.remove(req.params.dishId); 
                 favorites.save()
                 .then((favorites) => {
@@ -148,5 +149,13 @@ favoriteRouter.route('/:dishId')
     .catch((err) => next(err));
 });
 
+isDishExisting((dishId,dishes) =>{
+    for( var i=0; i<dishes.length; i++){
+        if(dishes[i]==dishId){
+            return true;
+        }
+    }
+    return false;
+});
 
 module.exports = favoriteRouter;
