@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Upload</title>
+        <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+        <script>
+            // var url= "http://localhost:80/....";
+            $(document).ready(function(){
+                $('#uploadBtn').click( () =>{
+                    console.log('btn clicked');
+                    var file = document.getElementById('upload').files[0];
+                    console.log('upload method clicked');
+                    var xhr = new XMLHttpRequest();
+                     // not necessary if you create scopes like this
+                    xhr.addEventListener('progress', function(e) {
+                        var done = e.position || e.loaded, total = e.totalSize || e.total;
+                        console.log('xhr progress: ' + (Math.floor(done/total*1000)/10) + '%');
+                    }, false);
+                    if ( xhr.upload ) {
+                        xhr.upload.onprogress = function(e) {
+                            var done = e.position || e.loaded, total = e.totalSize || e.total;
+                            console.log('xhr.upload progress: ' + done + ' / ' + total + ' = ' + (Math.floor(done/total*1000)/10) + '%');
+                        };
+                    }
+                    xhr.onreadystatechange = function(e) {
+                        if ( 4 == this.readyState ) {
+                            console.log(['xhr upload complete', e]);
+                        }
+                    };
+                    
+                    var url='https://localhost:3443/imageUpload';
+                    xhr.open('post', url, true);
+                    xhr.withCredentials = true;
+                    
+                    var token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGQ2OWI3NDIzZTA4ZDIxMGM0YzVlYjgiLCJpYXQiOjE1NzQzNTkxMDgsImV4cCI6MTU3NDM2MjcwOH0.DURuneq-V-kIS_Bo9Eb_Ob7kDlHEUtYzNVphFtaf6FE";
+                    xhr.setRequestHeader("Authorization","bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGQ2OWI3NDIzZTA4ZDIxMGM0YzVlYjgiLCJpYXQiOjE1NzQzNTkxMDgsImV4cCI6MTU3NDM2MjcwOH0.DURuneq-V-kIS_Bo9Eb_Ob7kDlHEUtYzNVphFtaf6FE");
+                    var formData = new FormData();
+                    formData.append("imageFile", file);
+                    
+                    
+                    xhr.send(formData);
+                //     document.getElementById('upload').addEventListener('change', function(e) {
+                    
+                // }, false);
+                });
+                
+            });
+        </script>
+    </head>
+    <body>
+        
+            Upload File:<br>
+            <input type="file" name="upload" id="upload"><br>
+            <br>
+            <button id="uploadBtn">Upload</button>
+          
+    </body>
+</html>
