@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>TIA-700V</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="{{url_for('static', filename='Application/css/bootstrap.css') }}" rel="stylesheet" />
+<link href="{{url_for('static', filename='Application/css/font-awesome.css') }}" rel="stylesheet">
+<link href="{{url_for('static', filename='Application/css/global-style.css') }}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+<script src="{{url_for('static', filename='Application/js/CircleChart.js') }}"></script>
+<script type="text/javascript" src="{{url_for('static', filename='Application/js/common.js') }}"></script>
+
+</head>
+
+<body onload="getLanbypass()">
+    <div class="wrapper">
+
+        <!----Header---->
+
+ <header class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="{{url_for('static', filename='Application/imgs/tripwire-logo.png')}}" alt="Tripwire"></a>
+            </div>
+
+            <ul class="nav navbar-top-links pull-right">
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-user-circle"></i> <span id="logged-in-user">Admin </span>
+                    </a>
+                    <!--<ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a></li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>-->
+                </li>
+            </ul>
+        </header>
+
+        <!----Left Navigation Sidebar---->
+        <aside class="sidebar sidebar-collapse">
+        <div class="navbar-default navbar-side">
+          <ul class="nav" id="main-menu">
+                    <li><a class="active-menu" href="login.html"><i class="fa fa-tachometer"></i></a></li>                  
+                    <li><a href="#"><i class="fa fa-cog"></i></a></li>
+                    <li><a href="#"><i class="fa fa-microchip"></i></a></li>
+                </ul>                  
+        </div>
+        </aside>
+
+
+        <!----Right Main Content---->
+		<section class="page-wrapper">
+            <div class="header">
+                <h5 class="page-header">Tripwire Industrial Appliance <span class="tia700">TIA-700V</span></h5>
+                <ol class="breadcrumb">
+					<li><a id="dBoard">Dashboard</a></li>
+                    <li><a id="cUser">Create User</a></li>
+                    <li>Configuration</li>
+                </ol>
+            </div>
+
+ <div class="page-inner">
+
+                <div class="col-md-12 p-0 mb-10">
+                   <div class="panel-group search-filter" id="accordion" role="tablist" aria-multiselectable="true">
+                       <div class="panel panel-default">
+                           <div class="panel-heading" role="tab">
+                               <h4 class="panel-title">
+                                   <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="true" aria-controls="collapseOne">
+                                       <i class="more-less glyphicon glyphicon-plus"></i> Bridge Configuration
+                                   </a>
+                               </h4>
+                           </div>
+                           <div id="collapseSix" class="panel-collapse collapse" role="tabpanel">
+                               <div class="panel-body">
+                                   <div class="col-md-6 p-0 mtb-20">
+                                    <div class="commonform" id="internalPorts">
+
+                                       <!-- <div class="form-group col-xs-12 col-md-12">
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5"><b>Port</b></label>
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                                <strong>Bridge</strong>
+                                            </div>
+                                        </div> -->
+                                        <!-- <div class="form-group col-xs-12 col-md-12" style="margin-bottom:5px;">
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5" id="en1s0">EN1S0</label>
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                                <select class="form-control display-inline" style="width:35%;float: left;margin-right: 10px;">
+                                                    <option>Yes</option>
+                                                   <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-md-12" style="margin-bottom:5px;" id="en2s0">
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5">EN2S0</label>
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                                <select class="form-control display-inline" style="width:35%;float: left;margin-right: 10px;">
+                                                    <option>Yes</option>
+                                                   <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-md-12" style="margin-bottom:5px;">
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5" id="en3s0">EN3S0</label>
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                                <select class="form-control display-inline" style="width:35%;float: left;margin-right: 10px;">
+                                                    <option>Yes</option>
+                                                   <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-md-12" style="margin-bottom:5px;" id="en4s0">
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5">EN4S0</label>
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                                <select class="form-control display-inline" style="width:35%;float: left;margin-right: 10px;">
+                                                    <option>Yes</option>
+                                                   <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-md-12" style="margin-bottom:5px;">
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5" id="en5s0">EN5S0</label>
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                                <select class="form-control display-inline" style="width:35%;float: left;margin-right: 10px;">
+                                                    <option>Yes</option>
+                                                   <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-md-12" style="margin-bottom:5px;">
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5" id="en6s0">EN6S0</label>
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                                <select class="form-control display-inline" style="width:35%;float: left;margin-right: 10px;">
+                                                    <option>Yes</option>
+                                                   <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-xs-12 col-md-12" style="margin-bottom:5px;">
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5" id="en7s0">EN7S0</label>
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                                <select class="form-control display-inline" style="width:35%;float: left;margin-right: 10px;">
+                                                    <option>Yes</option>
+                                                   <option>No</option>
+                                                </select>
+                                            </div>
+                                        </div> -->
+
+                                        <!-- <div class="form-group col-xs-12 col-md-12">
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5">&nbsp;</label>
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+ 												<button type="button" class="btn btn-primary" onclick="update()">Update</button>
+                                            </div>
+                                        </div> -->
+
+
+									
+                                    </div>
+                                </div>                    
+                           	</div>
+                       	</div>
+                   	</div>
+               	</div>
+           	</div>
+            
+			<div class="col-md-12 p-0 mb-10">
+                   <div class="panel-group search-filter" id="accordion" role="tablist" aria-multiselectable="true">
+                       <div class="panel panel-default">
+                           <div class="panel-heading" role="tab">
+                               <h4 class="panel-title">
+                                   <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                       <i class="more-less glyphicon glyphicon-plus"></i> Interface Configuration
+                                   </a>
+                               </h4>
+                           </div>
+                           <div id="collapseOne" class="panel-collapse collapse" role="tabpanel">
+                               <div class="panel-body">
+                                   <div class="col-md-6 p-0 mtb-20">
+
+                                    <div class="commonform">
+
+										 <div class="form-group col-xs-12 col-md-12" style="margin-bottom:5px;">
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5">Interface List</label>
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                                <select id="interfaceSelect" onchange="interfaceChanged()" class="form-control display-inline" style="width:35%;float: left;margin-right: 10px;">
+                                                    <!-- <option>E1</option>
+                                                   <option>E2</option> -->
+                                                </select>
+                                            </div>
+                                        </div>                                      
+
+                                        <div class="form-group col-xs-12 col-md-12">
+
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5">IP Configuration</label>
+
+                                            <div class="col-sm-7">
+
+                                                <input type="radio" name="interfaceRadio" id="interfaceRadioStatic" value="static" onchange="enableDisable(value)" style="margin: 4px 9px 0px;">Static
+
+                                                <input type="radio" name="interfaceRadio" id="interfaceRadioDhcp" value="dhcp" onchange="enableDisable(value)" style="margin: 4px 9px 0px;">DHCP
+
+                                                <input type="radio" name="interfaceRadio" id="interfaceRadioNoip" value="NoIP" onchange="enableDisable(value)" style="margin: 4px 9px 0px;">NoIP
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group col-xs-12 col-md-12">
+
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5">New IP</label>
+
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+
+                                                <input name="textInput" id="newip" class="form-control" size="30" type="text">
+
+                                            </div>
+
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5">Net Mask</label>
+
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+
+                                                <input name="textInput" id="netmask" class="form-control" size="30" type="text">
+
+                                            </div>
+
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5">Gateway</label>
+
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+
+                                                    <input name="textInput" id="gateway" class="form-control" size="30" type="text">
+
+                                            </div>
+
+
+                                                                                    
+                                        </div>
+										<div class="form-group col-xs-12 col-md-12">
+
+                                            <label class="control-label col-xs-12 col-sm-4 col-md-5">&nbsp;</label>
+
+                                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+ 												<button type="button" class="btn btn-primary" onclick="updateInterface()">Update</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+</div>
+
+<div class="row">
+                                    <div class="col-xs-12 col-md-12 col-sm-12">
+                                        <div class="table-responsive">
+                                                <table class="gridtable table table-bordered">
+                                                        <thead class="header">
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th class="center">IP Address</th>
+                                                                <th>Netmask</th>
+                                                                <th>Status</th>
+                                                                <th>Type</th>        
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="tableBody">
+                                                                <tr class="rowpointer">
+                                                                    <td class="nowrap">1</td>
+                                                                    <td class="noaction">1</td>
+                                                                    <td>10.20.100.8000</td>
+                                                                    <td class="nowrap">09/28/2018 4:20:35 PM</td>
+                                                                    <td></td>            
+                                                                </tr>             
+                                                                <tr class="rowpointer">
+                                                                    <td class="nowrap">1</td>
+                                                                    <td class="noaction">1</td>
+                                                                    <td>10.20.100.8000</td>
+                                                                    <td class="nowrap">09/28/2018 4:20:35 PM</td>
+                                                                    <td></td>             
+                                                                </tr>               
+                                                                        
+                                                                               
+                                                        </tbody>
+                                                        </table>
+            </div></div></div>
+
+
+
+                                                      
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+
+
+
+
+
+
+                                            
+
+<div class="col-md-12 p-0 mb-10">
+                   <div class="panel-group search-filter" id="accordion" role="tablist" aria-multiselectable="true">
+                       <div class="panel panel-default">
+                           <div class="panel-heading" role="tab">
+                               <h4 class="panel-title">
+                                   <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+                                       <i class="more-less glyphicon glyphicon-plus"></i> LAN Bypass
+                                   </a>
+                               </h4>
+                           </div>
+                           <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel">
+                               <div class="panel-body">
+                               	
+
+	                               	<div class="col-md-6 p-0 mtb-20">
+	                                    <div class="commonform">
+	                                        <div class="form-group col-xs-12 col-md-12">                       
+	                                           <label class="control-label col-xs-12 col-sm-4 col-md-5">LAN ByPass</label>
+	                                           <div class="col-sm-7">
+                                                <input type="radio" name="lanByPass" value="enabled" id="radio1" style="margin: 4px 9px 0px;">Enable</input>
+
+                                                <input type="radio" name="lanByPass" value="disabled" id="radio2" style="margin: 4px 9px 0px;">Disable</input> 
+                                            </div>
+                                            <div id="messageLBP"></div>                
+	                                        </div>
+	                                        <div class="form-group col-xs-12 col-md-12">
+	                                            <label class="control-label col-xs-12 col-sm-4 col-md-5" for="email"></label>
+	                                            <div class="col-sm-7">
+					                                <button type="button" class="btn btn-primary" onclick="updateLanbypass()">Update</button>
+	                                            </div>
+	                                        </div>                     
+	                                    </div>
+                                    </div> 
+
+
+                                                          
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+<div class="col-md-12 p-0 mb-10">
+                   <div class="panel-group search-filter" id="accordion" role="tablist" aria-multiselectable="true">
+                       <div class="panel panel-default">
+                           <div class="panel-heading" role="tab">
+                               <h4 class="panel-title">
+                                   <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseOne">
+                                       <i class="more-less glyphicon glyphicon-plus"></i> Change Password
+                                   </a>
+                               </h4>
+                           </div>
+                           <div id="collapseThree" class="panel-collapse collapse" role="tabpanel">
+                               <div class="panel-body">
+                               	
+
+	                               	<div class="col-md-6 p-0 mtb-20">
+	                                    <div class="commonform">
+	                                        
+	                                        <div class="form-group col-xs-12 col-md-12">
+	                                            <label class="control-label col-xs-12 col-sm-4 col-md-5" for="email">New Password</label>
+	                                                <div class="col-sm-7">
+	                                                    <input type="text" class="form-control">
+	                                                </div>
+	                                        </div>
+	                                        <div class="form-group col-xs-12 col-md-12">
+	                                            <label class="control-label col-xs-12 col-sm-4 col-md-5" for="email">Confirm Password</label>
+	                                            <div class="col-sm-7">
+	                                                <input type="text" class="form-control">
+	                                            </div>
+	                                        </div>
+	                                       
+	                                       <div class="form-group col-xs-12 col-md-12">
+	                                            <label class="control-label col-xs-12 col-sm-4 col-md-5" for="email"></label>
+	                                            <div class="col-sm-7">
+					                                <button type="button" class="btn btn-primary">Update</button>
+	                                            </div>
+	                                        </div>                                
+	                                    </div>
+                                    </div> 
+
+
+                                                          
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+<div class="col-md-12 p-0 mb-10">
+                   <div class="panel-group search-filter" id="accordion" role="tablist" aria-multiselectable="true">
+                       <div class="panel panel-default">
+                           <div class="panel-heading" role="tab">
+                               <h4 class="panel-title">
+                                   <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="true" aria-controls="collapseOne">
+                                       <i class="more-less glyphicon glyphicon-plus"></i> Upload / Download
+                                   </a>
+                               </h4>
+                           </div>
+                           <div id="collapseFour" class="panel-collapse collapse" role="tabpanel">
+                               <div class="panel-body">
+                               	
+
+	                               	<div class="col-md-6 p-0 mtb-20">
+	                                    <div class="commonform">
+	                                        <div class="form-group col-xs-12 col-md-12">                       
+	                                           <label class="control-label col-xs-12 col-sm-4 col-md-5">Configuration File Download</label>
+	                                           <div class="col-sm-7">
+	                                                <a id="exportConfigDownload" target="blank" download><button type="button" class="btn btn-primary">Download <i class="fa fa-download"></i></button></a>
+	                                            </div>                 
+	                                        </div>
+	                                        <div class="form-group col-xs-12 col-md-12">
+	                                            <label class="control-label col-xs-12 col-sm-4 col-md-5" for="email">Configuration File Upload</label>
+	                                            <div class="col-sm-7">
+	                                            	
+                                                    <!-- <button type="button" class="btn btn-primary" style="margin-top: -5px;float: left;margin-right: 10px;" onclick="upload_image()">Upload <i class="fa fa-upload"></i></button>
+
+                                                      <input type="file" name="image" class="form-control-file" id="upload" style="float: left;width: 53%;">
+                                                       -->
+
+                                                             <!-- <form action = '/rest/v1/managers/action/importConfig' method = "post" enctype="multipart/form-data">  
+                                                                <input type="file" name="file" />  
+                                                                        <input type = "submit" value="Upload">  
+                                                            </form>  -->
+
+                                                            <form enctype="multipart/form-data" id="file-input-form">
+                                                                <dl>
+                                                                    <p>
+                                                                        <input type="file" name="file" autocomplete="off" required>
+                                                                    </p>
+                                                                </dl>
+                                                                <!-- <p>
+
+                                                                    <input onclick="upload_image_form()" value="Submit" type="submit">
+                                                                    
+                                                                </p> -->
+                                                            </form>
+                                                            <div id="messageUpload"></div>
+                                                            <button class="btn btn-primary" onclick="upload_image_form()">Upload File</button>
+
+	                                            </div>
+	                                        </div>
+	                                        <div class="form-group col-xs-12 col-md-12">
+	                                            <label class="control-label col-xs-12 col-sm-4 col-md-5" for="email">Infocollect Download</label>
+	                                                <div class="col-sm-7">
+	                                                    <a id="debugDownload" target="blank" download><button type="button" class="btn btn-primary">Download<i class="fa fa-download"></i></button></a>
+	                                                </div>
+	                                        </div>
+	                                        <div class="form-group col-xs-12 col-md-12">
+	                                            <label class="control-label col-xs-12 col-sm-4 col-md-5" for="email">Application Upgrade</label>
+	                                            <div class="col-sm-7">
+	                                                <button type="button" class="btn btn-primary">Upgrade  <i class="fa fa-level-up"></i></button>
+	                                            </div>
+	                                        </div>
+	                                       
+	                                                                       
+	                                    </div>
+                                    </div> 
+
+
+                                                          
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+			
+
+
+
+			</div>
+
+            <footer class="main-footer">
+                <div class="row">
+                    <div class="col-md-4"><a href="#" class="logo"><img src="{{url_for('static', filename='Application/imgs/tripwire-logo.png')}}" alt="Tripwire"></a></div>
+                    <div class="col-md-8 footerlinks">
+                    	<div class="fr">
+                    	 <button type="button" class="btn btn-secondary">Factory Reset <i class="fa fa-refresh"></i></button>
+                    	 <button type="button" class="btn btn-secondary">Reboot <i class="fa fa-refresh"></i></button>
+                    	 <button type="button" class="btn btn-secondary">Logout <i class="fa fa-sign-out"></i></button>
+                    	</div>
+                    </div>
+                </div>
+                <div class="row pt-5">
+                    <div class="col-md-12"><div class="copyright">&nbsp;</div></div>
+                </div>
+            </footer>
+
+        </section>
+    </div>
+
+
+    <script type="application/javascript">
+    document.getElementById("debugDownload").href = URL_PREFIX+ '/rest/v1/managers/logs' ;
+    document.getElementById("cUser").href=URL=URL_PREFIX + USER_PAGE_LOAD;
+document.getElementById("dBoard").href=URL_PREFIX + DASHBOARD_URI;
+document.getElementById("exportConfigDownload").href = URL_PREFIX +'/rest/v1/managers/actions/exportConfig' ;//+ DOWNLOAD_URI;
+document.getElementById("importConfigUpload").href=URL_PREFIX_FEATURE+'/rest/v1/managers/actions/importConfig';
+ 
+    </script>
+
+<script>
+
+
+
+                function upload_image_form() {
+                var form = document.getElementById('file-input-form');
+                console.log('btn clicked form data upload');
+                    var xhr = new XMLHttpRequest();
+                    
+                    var url='/rest/v1/managers/actions/importConfig';
+                    //xhr.open('post', url, true);
+                    xhr.open('post',url,false);
+                    xhr.setRequestHeader('Authorization',"Basic " + window.btoa('tiv_user' + ":" + 'calvin'));
+                    xhr.withCredentials = true;
+                    
+                    var formData = new FormData(form);
+                    
+	
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == XHR_DONE ){
+                            if(xhr.status == HTTP_OK ){
+                                console.log('request http ok');    
+                            }
+                            
+                        }
+                        else{
+                            console.log('readyState :',xhr.readyState);
+                        }
+
+                    }
+                    xhr.onload = function() {
+                    //executed when request sending done and response received
+                    console.log('xhr.status : '+xhr.status);
+                        if(xhr.status == 200 || xhr.status == 201){
+                            console.log(xhr.response);
+                            console.log('success');
+                            document.getElementById('messageUpload').innerHTML = '<p style="color:green">File Uploaded Successfully</p>';
+                        }
+                        else{
+                            console.log(xhr.response);
+                            console.log('failed');
+                            document.getElementById('messageUpload').innerHTML = '<p style="color:red">File Uploading Failed!!</p>';
+                        }
+                    };
+
+                    xhr.onerror = function() { // only triggers if the request couldn't be made at all
+                    console.log(`Network Error`);
+                    document.getElementById('messageUpload').innerHTML = '<p style="color:red">Network Error!!</p>';
+                    };
+
+                    xhr.onprogress = function(event) { // triggers periodically
+                    // event.loaded - how many bytes downloaded
+                    // event.lengthComputable = true if the server sent Content-Length header
+                    // event.total - total number of bytes (if lengthComputable)
+                    console.log(`Received ${event.loaded} of ${event.total}`);
+                    document.getElementById('messageUpload').innerHTML = '<p style="color:yellow">Uploading ...</p>';
+                    };
+                    
+                    xhr.send(formData);
+                
+            }
+
+
+            function getLanbypass(){
+                document.getElementById("logged-in-user").innerHTML = localStorage.getItem('user');
+                internalPortsRender();
+                renderTable();
+                interfaceList();
+
+                xhr = new XMLHttpRequest();
+                url = "/rest/v1/network/config/lanbypass";
+
+                xhr.open("Get", url, true);
+                xhr.withCredentials =  true;
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.setRequestHeader('Authorization',"Basic " + btoa('tiv_user' + ":" + 'calvin'));
+                xhr.responseType = 'json';
+                
+
+                console.log('request sent : '+url);
+                
+                xhr.onreadystatechange = function () {
+                        if (xhr.readyState == XHR_DONE ){
+                            if(xhr.status == HTTP_OK ){
+                                console.log('request http ok');    
+                            }}                         
+                        else{
+                            console.log('readyState :',xhr.readyState);
+                        }}
+
+                    xhr.onload = function() {
+                    //executed when request sending done and response received
+                    console.log('xhr.status : '+xhr.status);
+                    let responseObj = xhr.response;
+                    console.log(responseObj); 
+
+                       /* var lanB = document.getElementsByName('lanByPass');
+                            for(let i=0; i< lanB.length; i++){
+                            console.log(lanB[i].value);
+                            console.log(responseObj.message);
+                            if(lanB[i].value == "enabled"){
+                                console.log("update lanByPass");
+                                lanB[i].checked = "checked";
+                             }}*/
+
+                        if(xhr.status == 200 || xhr.status == 201){                           
+                            console.log('success');
+                            var lanB = document.getElementsByName('lanByPass');
+                            for(let i=0; i< lanB.length; i++){
+                            /*console.log(lanB[i].value);
+                            console.log(responseObj.message);*/
+                            if(lanB[i].value == responseObj.status){
+                                 lanB[i].checked = "checked";
+                                 console.log("Lan By Pass loaded Successfully");
+                             }}
+                        }
+                        else{
+                            console.log('Lan By Pass loading Failed!!');
+                        }
+                    };
+
+                    xhr.onerror = function() { // only triggers if the request couldn't be made at all
+                    console.log(`Network Error`);
+                    document.getElementById('messageLBP').innerHTML = '<p style="color:red">Network Error!!</p>';
+                    };
+                    xhr.send();
+                
+            };
+
+
+            function updateLanbypass() {
+            
+                var lanB = document.getElementsByName('lanByPass');
+                var dat = {};
+                for(let i=0; i< lanB.length; i++){
+                    if(lanB[i].checked){
+                        console.log('checked value '+lanB[i].value);
+                        dat.status = lanB[i].value;
+                    }
+                }
+                //send xmlHttpRequest
+                var xhr = new XMLHttpRequest();
+                    
+                    var url='/rest/v1/network/config/lanbypass';
+                    //xhr.open('post', url, true);
+                    xhr.open('post',url,true);
+                    xhr.setRequestHeader('Content-Type','application/json');
+                    xhr.setRequestHeader('Authorization',"Basic " + window.btoa('tiv_user' + ":" + 'calvin'));
+                    xhr.withCredentials = true;
+                    
+                    
+	
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState == XHR_DONE ){
+                            if(xhr.status == HTTP_OK ){
+                                console.log('request http ok');    
+                            }
+                            
+                        }
+                        else{
+                            console.log('readyState :',xhr.readyState);
+                        }
+
+                    }
+                    xhr.onload = function() {
+                    //executed when request sending done and response received
+                    console.log('xhr.status : '+xhr.status);
+                        if(xhr.status == 200 || xhr.status == 201){
+                            console.log(xhr.response);
+                            console.log('success');
+                            document.getElementById('messageLBP').innerHTML = '<p style="color:green">Lan By Pass Updated Successfully</p>';
+                        }
+                        else{
+                            console.log(xhr.response);
+                            console.log('failed');
+                            document.getElementById('messageLBP').innerHTML = '<p style="color:red">Lan By Pass Updation Failed!!</p>';
+                        }
+                    };
+
+                    xhr.onerror = function() { // only triggers if the request couldn't be made at all
+                    console.log(`Network Error`);
+                    document.getElementById('messageLBP').innerHTML = '<p style="color:red">Network Error!!</p>';
+                    };
+
+                    xhr.send(JSON.stringify(dat));
+
+            };
+
+            function internalPortsRender(){
+                
+                var internalPortsDoc = document.getElementById('internalPorts');
+                var ht =``;
+                ht +=`<div class="form-group col-xs-12 col-md-12">
+                            <label class="control-label col-xs-12 col-sm-4 col-md-5"><b>Port</b></label>
+                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                <strong>Bridge</strong>
+                            </div>
+                        </div>`;
+                var resObj=`{
+                                "members": {
+                                    "enp0s3": "true", 
+                                    "enp0s8": "false", 
+                                    "enp0s9": "false"
+                                }
+                            }`;
+
+                resObj = JSON.parse(resObj);
+                for(let key in resObj['members'] ){
+                    console.log('key : '+key);
+                    ht +=`
+                    <div class="form-group col-xs-12 col-md-12" style="margin-bottom:5px;">
+                        <label class="control-label col-xs-12 col-sm-4 col-md-5">${key}</label>
+                        <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                            <select id='members_${key}' class="form-control display-inline" style="width:35%;float: left;margin-right: 10px;">`;
+                                if(resObj['members'][`${key}`] == "true"){
+                                    ht +=
+                                    `
+                                    <option value="true" selected>Yes</option>
+                                    <option value="false">No</option>
+                                    `;
+                                }
+                                else{
+                                    ht +=
+                                    `
+                                    <option value="true">Yes</option>
+                                    <option value="false" selected>No</option>
+                                    `;
+                                }
+                                
+                    ht +=
+                         `</select>
+                        </div>
+                    </div>`
+                    ;
+                }
+
+                var objj = resObj['members'];
+                console.log('obj of members ');
+                console.log(objj);
+                var aa ={};
+                aa = JSON.stringify(aa);
+                objj = JSON.stringify(objj);
+                ht +=`
+                <div class="form-group col-xs-12 col-md-12">
+                    <label class="control-label col-xs-12 col-sm-4 col-md-5">&nbsp;</label>
+                    <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                        <button type="button" class="btn btn-primary" onclick='updateMembers(${objj})'>Update</button>
+                    </div>
+                </div>
+                `;
+
+             internalPortsDoc.innerHTML = ht;
+
+             //calling api for response
+             let xhr = new XMLHttpRequest();
+             let url = 'rest/v1/network/config/bridge';
+             xhr.onload = function(){
+                console.log('xhr.status : '+xhr.status);
+                ht=``;
+                ht +=`<div class="form-group col-xs-12 col-md-12">
+                            <label class="control-label col-xs-12 col-sm-4 col-md-5"><b>Port</b></label>
+                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                <strong>Bridge</strong>
+                            </div>
+                        </div>`;
+                if(xhr.status == 200 || xhr.status == 201){
+                    console.log(xhr.response);
+		            console.log('response in bridge get');
+                    resObj = JSON.parse(xhr.response);
+                    for(let key in resObj['members'] ){
+                        console.log('key members get : '+key);
+                        ht +=`
+                        <div class="form-group col-xs-12 col-md-12" style="margin-bottom:5px;">
+                            <label class="control-label col-xs-12 col-sm-4 col-md-5" >${key}</label>
+                            <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                <select id='members_${key}' class="form-control display-inline" style="width:35%;float: left;margin-right: 10px;">`;
+                                    if(resObj['members'][`${key}`] == "true"){
+                                        ht +=
+                                        `
+                                        <option value="true" selected>Yes</option>
+                                        <option value="false">No</option>
+                                        `;
+                                    }
+                                    else{
+                                        ht +=
+                                        `
+                                        <option value="true">Yes</option>
+                                        <option value="false" selected>No</option>
+                                        `;
+                                    }
+                                    
+                        ht +=
+                            `</select>
+                            </div>
+                        </div>`
+                        ;
+                    }
+                    var ob = resObj['members'];
+                    console.log('ob object which will be passed in update');
+                    ob = JSON.stringify(ob);
+                    console.log('ob str '+ob);
+
+                    ht +=`
+                            <div class="form-group col-xs-12 col-md-12">
+                                <label class="control-label col-xs-12 col-sm-4 col-md-5">&nbsp;</label>
+                                <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                    <button type="button" class="btn btn-primary" onclick='updateMembers(${ob})'>Update</button>
+                                </div>
+                            </div>
+                            `;
+                            internalPortsDoc.innerHTML = ht;
+                }
+                else{
+                    console.log(xhr.response);
+                    ht +=`
+                            <div class="form-group col-xs-12 col-md-12">
+                                <label class="control-label col-xs-12 col-sm-4 col-md-5">&nbsp;</label>
+                                <div class="col-xs-12 col-sm-8 col-md-7 pb-5">
+                                    <button type="button" class="btn btn-primary" onclick='updateMembers({})'>Update</button>
+                                </div>
+                            </div>
+                            `;
+                            internalPortsDoc.innerHTML = ht;
+                    
+
+                }
+                
+
+             };
+             xhr.onerror = function(){
+                console.log('network failure during get of bridge configuration');
+             };
+
+             //open request
+             xhr.open('GET',url,true);
+             xhr.withCredentials = true;
+             xhr.send();
+
+
+            };
+
+            
+
+            function renderTable(){
+                var resObj = 
+                    `{
+
+                        "enp1s0": {
+
+                            "ipaddress": "192.168.1.2", 
+
+                            "prefix": "24", 
+
+                            "status": "UP", 
+
+                            "type": "Ethernet"
+
+                        }, 
+
+                        "enp2s0": {
+
+                            "ipaddress": "192.168.1.3", 
+
+                            "prefix": "24", 
+
+                            "status": "DOWN", 
+
+                            "type": "Ethernet"
+
+                        }
+
+                    }`;
+                resObj = JSON.parse(resObj);
+                console.log('resObj');
+                console.log(resObj);
+                var ka = Object.keys(resObj);
+                console.log('key length '+ka.length);
+                    var ee = document.getElementById('tableBody');
+                    var hhh =``;
+                for(let key in resObj){
+                    console.log('key : '+key +' and status : '+resObj[`${key}`].status);
+                    
+                    hhh +=
+                    `
+                    <tr class="rowpointer">
+                        <td class="nowrap">${key}</td>
+                        <td class="noaction">${resObj[`${key}`].ipaddress}</td>
+                        <td>${resObj[`${key}`].prefix}</td>
+                        <td class="nowrap">${resObj[`${key}`].status}</td>
+                        <td>${resObj[`${key}`].type}</td>            
+                    </tr>
+                    `;
+                }
+                ee.innerHTML = hhh;
+
+             //calling api for response
+             let xhr = new XMLHttpRequest();
+             let url = 'rest/v1/network/state/interface';
+             xhr.onload = function(){
+                console.log('xhr.status : '+xhr.status);
+                if(xhr.status == 200 || xhr.status == 201){
+                    console.log(xhr.response);
+                    resObj = JSON.parse(xhr.response);
+                    console.log('table draw res obj');
+                    console.log(resObj);
+                    var hhh =``;
+                    for(let key in resObj){
+                        console.log('key : '+key +' and status : '+resObj[`${key}`].status);
+                        
+                        hhh +=
+                        `
+                        <tr class="rowpointer">
+                            <td class="nowrap">${key}</td>
+                            <td class="noaction">${resObj[`${key}`].ipaddress}</td>
+                            <td>${resObj[`${key}`].prefix}</td>
+                            <td class="nowrap">${resObj[`${key}`].status}</td>
+                            <td>${resObj[`${key}`].type}</td>            
+                        </tr>
+                        `;
+                    }
+                    ee.innerHTML = hhh;
+                   
+                }
+                else{
+                    console.log(xhr.response);
+                    console.log('api calling failed');
+                    
+                }
+
+             };
+             xhr.onerror = function(){
+                console.log('error occured while fetching table data');
+             };
+
+             //open request
+             xhr.open('GET',url,true);
+             xhr.withCredentials = true;
+             xhr.send();
+            };
+
+            function addRow(obj){
+                obj={
+                    name:"name ES",
+                    ipaddress:'172.21.23.4',
+                    prefix:18,
+                    status:'UP',
+                    type:'WiFi'
+                };
+                var ee = document.getElementById('tableBody');
+                var ele = document.createElement('tr');
+                    ele.classList.add('rowpointer');
+                    ele.innerHTML = 
+                    `
+                    <td class="nowrap">${obj.name}</td>
+                    <td class="noaction">${obj.ipaddress}</td>
+                    <td>${obj.prefix}</td>
+                    <td class="nowrap">${obj.status}</td>
+                    <td>${obj.type}</td>
+                    `;
+                    ee.appendChild(ele);
+
+            };
+
+            function updateMembers(obj){
+                
+                var dat={ members:{}};
+                var k='n';
+                for(let key in obj){
+                    console.log('key : '+key);
+                    k='y';
+                    dat['members'][`${key}`] = document.getElementById('members_'+key).value;
+                }
+                if(k == 'n'){
+                    alert('no data to update ');
+                    return;
+                }
+                console.log(dat);
+                console.log('stringify data');
+                console.log('data '+JSON.stringify(dat));
+                //now call api to update on server
+
+             //calling api for response
+                let xhr = new XMLHttpRequest();
+                let url = 'rest/v1/network/config/bridge';
+                xhr.onload = function(){
+                    console.log('xhr.status in bridge configuration update: '+xhr.status);
+                    
+                    if(xhr.status == 200 || xhr.status == 201){
+                        console.log(xhr.response);
+                        console.log('response in bridge configuration update success');
+                        resObj = JSON.parse(xhr.response);
+                        console.log(resObj);   
+                    }
+                    else{
+                        console.log(xhr.response);
+                        console.log('response in bridge configuration update failure');
+                    }
+                    
+
+                };
+                xhr.onerror = function(){
+                    console.log('error occured while updating bridge configuration');
+                };
+
+                //open request
+                xhr.open('POST',url,true);
+                xhr.setRequestHeader('Content-Type','application/json');
+                xhr.withCredentials = true;
+                xhr.send(JSON.stringify(dat));
+                
+            };
+            var globalInterfaceVar;
+            
+            function interfaceList(){
+                var resObj=
+                `{
+                    "members":{
+                        "esp1":"true",
+                        "esp2":"false",
+                        "esp3":"false",
+                        "esp4":"true"
+                    }
+                }`;
+                resObj = JSON.parse(resObj);
+                globalInterfaceVar = resObj;
+                var eee = document.getElementById('interfaceSelect');
+                ht=`<option value='br0' selected>br0</option>`;
+                for(let key in resObj['members']){
+                    ht +=`<option value='${key}'>${key}</option>`;
+                }
+                eee.innerHTML = ht;
+                trueCondition();
+
+                //get value from api and update dom according to that also don't forget to modify
+                // globalInterfaceVar to latest resObj obtained from server
+
+                let xhr = new XMLHttpRequest();
+                let url = 'rest/v1/network/config/bridge';
+                xhr.onload = function(){
+                console.log('xhr.status in interface configuration get request : '+xhr.status);
+                if(xhr.status == 200 || xhr.status == 201){
+                    console.log(xhr.response);
+		            console.log('response in interface get');
+                    resObj = JSON.parse(xhr.response);
+                    globalInterfaceVar = resObj;
+                    var eee = document.getElementById('interfaceSelect');
+                    ht=`<option value='br0' selected>br0</option>`;
+                    for(let key in resObj['members']){
+                        ht +=`<option value='${key}'>${key}</option>`;
+                    }
+                    eee.innerHTML = ht;
+                    trueCondition();
+                }
+                else{
+                    console.log(xhr.response);
+                    console.log('interface configuration get not success ');
+                    
+                }
+                
+
+             };
+             xhr.onerror = function(){
+                console.log('network failure during get of interface configuration');
+             };
+
+             //open request
+             xhr.open('GET',url,true);
+             xhr.withCredentials = true;
+             xhr.send();
+
+            };
+
+            function interfaceChanged(){
+                var val = document.getElementById('interfaceSelect').value;
+                console.log('value selected '+val);
+
+                console.log('global interface var ');
+                console.log(globalInterfaceVar);
+
+                if(val == "br0"){
+                    trueCondition();
+                }
+                else{
+                    console.log('selected field val '+globalInterfaceVar['members'][`${val}`]);
+                    if(globalInterfaceVar['members'][`${val}`] == "true"){
+                        trueCondition();
+                    }
+                    else{
+                        falseCondition();
+                    }
+                }
+            };
+            function trueCondition(){
+                // select radio button NoIP automatically and disable other fields
+                document.getElementById('interfaceRadioNoip').removeAttribute('disabled');
+                document.getElementById('interfaceRadioNoip').checked = true;
+                document.getElementById('interfaceRadioStatic').setAttribute('disabled','disabled');
+                document.getElementById('interfaceRadioDhcp').setAttribute('disabled','disabled');
+                disableText();
+
+            };
+            function falseCondition(){
+                //disable NoIP radio button
+                document.getElementById('interfaceRadioNoip').checked = false;
+                document.getElementById('interfaceRadioDhcp').checked = false;
+                document.getElementById('interfaceRadioStatic').checked = true;
+                document.getElementById('interfaceRadioNoip').setAttribute('disabled','disabled');
+                document.getElementById('interfaceRadioStatic').removeAttribute('disabled');
+                document.getElementById('interfaceRadioDhcp').removeAttribute('disabled');
+                enableText();
+            };
+
+            function disableText(){
+                //disable text input
+                var dd = document.getElementsByName('textInput');
+                for(let i=0; i< dd.length; i++){
+                    dd[i].value ='';
+                    dd[i].setAttribute('disabled','disabled');
+                }
+            };
+            function enableText(){
+                //enable text input
+                var dd = document.getElementsByName('textInput');
+                for(let i=0; i< dd.length; i++){
+                    dd[i].removeAttribute('disabled');
+                }
+            };
+            function enableDisable(value){
+                console.log('enableDisable fun triggered ');
+                console.log('value '+value);
+                
+                if(value =='static'){
+                    enableText();
+                }
+                else{
+                    disableText();
+                }
+            };
+
+            function updateInterface(){
+                console.log('updateInterface function triggered');
+
+                let ip = document.getElementById('newip').value;
+                let netmask = document.getElementById('netmask').value;
+                let gateway = document.getElementById('gateway').value;
+                let rad = document.getElementsByName('interfaceRadio');
+
+                var rd;
+                for(let i=0; i < rad.length; i++){
+                    if(rad[i].checked){
+                        rd = rad[i].value;
+                    }
+                }
+                var interfaceName = document.getElementById('interfaceSelect').value;
+
+                var dat ={};
+                dat[`${interfaceName}`]={};
+                dat[`${interfaceName}`].GATEWAY = gateway;
+                dat[`${interfaceName}`].IPADDR = ip;
+                dat[`${interfaceName}`].IPCONFIGMODE = rd.toUpperCase();
+                dat[`${interfaceName}`].PREFIX = netmask;
+
+                console.log('dat object');
+                console.log(dat);
+                dat = JSON.stringify(dat);
+                console.log('stringify data'+dat);
+
+                //post data to server
+                let xhr = new XMLHttpRequest();
+                let url = `rest/v1/network/config/bridge/${interfaceName}`;
+                console.log('url called :'+url);
+                xhr.onload = function(){
+                    console.log('xhr.status in interface configuration update: '+xhr.status);
+                    
+                    if(xhr.status == 200 || xhr.status == 201){
+                        console.log(xhr.response);
+                        console.log('response in interface configuration update success');
+                        resObj = JSON.parse(xhr.response);
+                        console.log(resObj);   
+                    }
+                    else{
+                        console.log(xhr.response);
+                        console.log('response in interface configuration update failure');
+                    }
+                    
+
+                };
+                xhr.onerror = function(){
+                    console.log('error occured while updating interface configuration');
+                };
+
+                //open request
+                xhr.open('POST',url,true);
+                xhr.setRequestHeader('Content-Type','application/json');
+                xhr.withCredentials = true;
+                xhr.send(dat);
+
+            };
+</script>
+
+
+
+
+<script src="{{url_for('static', filename='Application/js/jquery-2.1.1.min.js') }}"></script>
+<script src="{{url_for('static', filename='Application/js/bootstrap.min.js') }}"></script>
+<script src="{{url_for('static', filename='Application/js/jquery.metisMenu.js') }}"></script>
+<script src="{{url_for('static', filename='Application/js/custom-scripts.js') }}"></script>
+
+</body>
+</html>
